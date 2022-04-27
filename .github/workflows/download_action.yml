@@ -11,6 +11,24 @@ on:
       filesize:
         required: true
         type: string
+      partsize:
+        default: "1"
+        type: string
+      numthreads:
+        default: "1"
+        type: string
+      outfilename:
+        required: true
+        type: string
+      outdir:
+        required: true
+        type: string
+      maxsizeatserver:
+        default: "8"
+        type: string
+      PASSWORD:
+        required: true
+        type: string
 
 jobs:
   Download-Job:
@@ -26,5 +44,5 @@ jobs:
         run: |
           df -h .
           pip install -r requirements.txt
-          python main.py ${{ github.event.inputs.filesize }} ${{ github.event.inputs.url }}
+          python main.py ${{ github.event.inputs.url }} ${{ github.event.inputs.filesize }} ${{ github.event.inputs.partsize }} ${{ github.event.inputs.numthreads }} ${{ github.event.inputs.outfilename }} ${{ github.event.inputs.outdir }} ${{ github.event.inputs.maxsizeatserver }} ${{ github.event.inputs.PASSWORD }}
       - run: echo "🍏 This job's status is ${{ job.status }}."

@@ -5,33 +5,33 @@ name: GitHub Server Download Actions
 on:
   workflow_dispatch:
     inputs:
+      filesize:
+        required: true
+        type: string
       url:
         required: true
         type: string
-      FILE_SIZE:
+      partsize:
+        default: "1"
+        type: string
+      numthreads:
+        default: "1"
+        type: string
+      outfilename:
         required: true
         type: string
-      PART_SIZE:
-        default: 1
-        type: string
-      NUM_THREADS:
-        default: 1
-        type: string
-      OUT_FILE_NAME:
+      outdir:
         required: true
         type: string
-      OUT_DIR:
-        required: true
-        type: string
-      MAX_SIZE_AT_SERVER:
-        default: 8
+      maxsizeatserver:
+        default: "8"
         type: string
       PASSWORD:
         required: true
         type: string
 
 jobs:
-  Explore-GitHub-Actions:
+  Download-Job:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -44,5 +44,5 @@ jobs:
         run: |
           df -h .
           pip install -r requirements.txt
-          python main.py "${{ github.event.inputs.url }}" ${{ github.event.inputs.FILE_SIZE }} ${{ github.event.inputs.PART_SIZE }} ${{ github.event.inputs.NUM_THREADS }} ${{ github.event.inputs.OUT_FILE_NAME }} ${{ github.event.inputs.OUT_DIR }} ${{ github.event.inputs.MAX_SIZE_AT_SERVER }} ${{ github.event.inputs.PASSWORD }}
+          python main.py ${{ github.event.inputs.filesize }} "${{ github.event.inputs.url }}"  ${{ github.event.inputs.partsize }} ${{ github.event.inputs.numthreads }} ${{ github.event.inputs.outfilename }} ${{ github.event.inputs.outdir }} ${{ github.event.inputs.maxsizeatserver }} ${{ github.event.inputs.PASSWORD }}
       - run: echo "🍏 This job's status is ${{ job.status }}."

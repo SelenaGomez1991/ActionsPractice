@@ -1,5 +1,17 @@
 name: GitHub Actions Demo
-on: [push]
+# on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        required: true
+        type: string
+      password:
+        required: true
+        type: string
+      uploadToNextcloud:
+        type: boolean
+        default: false    
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -17,4 +29,6 @@ jobs:
           df -h .
           pwd .
           du -h .
+          echo ${{ github.event.inputs.uploadToNextcloud }}
+          python temp.py ${{ github.event.inputs.url }} ${{ github.event.inputs.password }} ${{ github.event.inputs.uploadToNextcloud }}
       - run: echo "🍏 This job's status is ${{ job.status }}."

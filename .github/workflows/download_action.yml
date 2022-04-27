@@ -44,5 +44,5 @@ jobs:
         run: |
           df -h .
           pip install -r requirements.txt
-          python main.py ${{ github.event.inputs.filesize }} "${{ github.event.inputs.url }}"  ${{ github.event.inputs.partsize }} ${{ github.event.inputs.numthreads }} ${{ github.event.inputs.outfilename }} ${{ github.event.inputs.outdir }} ${{ github.event.inputs.maxsizeatserver }} ${{ github.event.inputs.PASSWORD }}
+          python main.py ${{ github.event.inputs.filesize }} ${{ github.event.inputs.partsize }} ${{ github.event.inputs.numthreads }} ${{ github.event.inputs.outfilename }} ${{ github.event.inputs.outdir }} ${{ github.event.inputs.maxsizeatserver }} ${{ github.event.inputs.PASSWORD }} "${{ github.event.inputs.url }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."

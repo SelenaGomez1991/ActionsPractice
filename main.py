@@ -52,16 +52,7 @@ def thread_func(url, headers, out_dest, base_name, file_nums, file_size, webdavC
 # !pip install webdav4
 # !sudo apt-get install aria2
 
-from webdav4.client import Client, InsufficientStorage
-import getpass
-p = getpass.getpass(prompt='Password: ',)
-user_name = 'cs5190443'
-client = Client(f'https://owncloud.iitd.ac.in/nextcloud/remote.php/dav/files/{user_name}/',
-                auth=(user_name, p))
 
-out_dest = 'XILINX'
-try: client.mkdir(out_dest, )
-except: ...
 
 def recurse_file_size(dir):
     total_size = 0
@@ -93,7 +84,7 @@ headers["User-Agent"] = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) 
 
 import sys
 
-# Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8 
+# Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8, PASSWORD
 
 url = sys.argv[1]
 FILE_SIZE = float(sys.argv[2]) 
@@ -101,6 +92,16 @@ PART_SIZE = int(sys.argv[3])
 NUM_PARTS = int(math.ceil(FILE_SIZE / PART_SIZE))
 NUM_THREADS = int(sys.argv[4])  # Will be decided based on storage size of local server
 file_nums = [[i for i in range(NUM_PARTS)][thread::NUM_THREADS] for thread in range(NUM_THREADS)]
+
+from webdav4.client import Client, InsufficientStorage
+p = sys.argv[8]
+user_name = 'cs5190443'
+client = Client(f'https://owncloud.iitd.ac.in/nextcloud/remote.php/dav/files/{user_name}/',
+                auth=(user_name, p))
+
+out_dest = 'XILINX'
+try: client.mkdir(out_dest, )
+except: ...
 
 thread_func(url, copy.deepcopy(headers), sys.argv[6], sys.argv[5], file_nums[0], PART_SIZE, client,maxSizeAtServer =  int(sys.argv[7]),)
 

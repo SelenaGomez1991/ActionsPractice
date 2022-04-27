@@ -83,6 +83,7 @@ headers["User-Agent"] = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) 
 
 
 import sys
+print('Here are the args',sys.argv)
 
 # Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8, PASSWORD
 

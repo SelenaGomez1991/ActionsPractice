@@ -85,24 +85,24 @@ headers["User-Agent"] = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) 
 import sys
 
 # Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8, PASSWORD
-
-url = sys.argv[2]
+print('args are', )
+url = sys.argv[8]
 FILE_SIZE = float(sys.argv[1]) 
-PART_SIZE = int(sys.argv[3]) 
+PART_SIZE = int(sys.argv[2]) 
 NUM_PARTS = int(math.ceil(FILE_SIZE / PART_SIZE))
-NUM_THREADS = int(sys.argv[4])  # Will be decided based on storage size of local server
+NUM_THREADS = int(sys.argv[3])  # Will be decided based on storage size of local server
 file_nums = [[i for i in range(NUM_PARTS)][thread::NUM_THREADS] for thread in range(NUM_THREADS)]
 
 from webdav4.client import Client, InsufficientStorage
-p = sys.argv[8]
+p = sys.argv[7]
 user_name = 'cs5190443'
 client = Client(f'https://owncloud.iitd.ac.in/nextcloud/remote.php/dav/files/{user_name}/',
                 auth=(user_name, p))
 
-out_dest = sys.argv[6]
+out_dest = sys.argv[5]
 try: client.mkdir(out_dest, )
 except: ...
 
-thread_func(url, copy.deepcopy(headers), out_dest, sys.argv[5], file_nums[0], PART_SIZE, client,maxSizeAtServer =  int(sys.argv[7]),)
+thread_func(url, copy.deepcopy(headers), out_dest, sys.argv[4], file_nums[0], PART_SIZE, client,maxSizeAtServer =  int(sys.argv[6]),)
 
 

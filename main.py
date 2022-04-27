@@ -86,8 +86,8 @@ import sys
 
 # Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8, PASSWORD
 
-url = sys.argv[1]
-FILE_SIZE = float(sys.argv[2]) 
+url = sys.argv[2]
+FILE_SIZE = float(sys.argv[1]) 
 PART_SIZE = int(sys.argv[3]) 
 NUM_PARTS = int(math.ceil(FILE_SIZE / PART_SIZE))
 NUM_THREADS = int(sys.argv[4])  # Will be decided based on storage size of local server

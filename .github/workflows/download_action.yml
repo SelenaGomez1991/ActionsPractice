@@ -1,0 +1,47 @@
+name: GitHub Server Download Actions
+# on: [push]
+
+# Order: url, FILE_SIZE, PART_SIZE = 1, NUM_THREADS = 1, OUT_FILE_NAME, OUT_DIR, MAX_SIZE_AT_SERVER = 8, PASSWORD
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        required: true
+        type: string
+      FILE_SIZE:
+        required: true
+        type: string
+      PART_SIZE:
+        default: 1
+        type: string
+      NUM_THREADS:
+        default: 1
+        type: string
+      OUT_FILE_NAME:
+        required: true
+        type: string
+      OUT_DIR:
+        required: true
+        type: string
+      MAX_SIZE_AT_SERVER:
+        default: 8
+        type: string
+      PASSWORD:
+        required: true
+        type: string
+
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: Server Side Downloading Begins
+        run: |
+          df -h .
+          python main.py ${{ github.event.inputs.url }} ${{ github.event.inputs.FILE_SIZE }} ${{ github.event.inputs.PART_SIZE }} ${{ github.event.inputs.NUM_THREADS }} ${{ github.event.inputs.OUT_FILE_NAME }} ${{ github.event.inputs.OUT_DIR }} ${{ github.event.inputs.MAX_SIZE_AT_SERVER }} ${{ github.event.inputs.PASSWORD }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
